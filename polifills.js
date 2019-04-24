@@ -18,12 +18,11 @@ const user = {
         console.log(this.firstName);
     }
 };
-
+user.sayHi();
 setTimeout(user.sayHi, 1000);
 setTimeout(user.sayHi.bind(user), 1000);
 setTimeout(user.sayHi.myBind(user), 1000);
 setTimeout(user.sayHi.myBind2(user), 1000);
-setTimeout(user.sayHi.bindMy(user), 1000);
 
 // Object.create
 Object.prototype.myCreate1 = function (proto) {
@@ -42,9 +41,33 @@ Object.prototype.myCreate2 = function (proto) {
 
 
 // reducer
+Array.prototype.myReduce = function (fn) {
+    let res = 0;
+    this.forEach((el, i) => res = fn(res, el, i, this));
 
+    // for (let i = 0, len = this.length; i < len; ++i) {
+    //     res = fn(res, this[i], i, this);
+    // }
+    return res;
+};
+
+let reduceRes = [2, 3, 4, 6].myReduce((a, b) => a + b);
+console.log('reduce [2, 3, 4, 6]: ' + reduceRes);
 
 // map
+Array.prototype.myMap = function (fn) {
+    let arr = [];
+    this.forEach(el => arr.push(fn(el)));
+
+    // for (let i = 0, len = this.length; i < len; i++)
+    //     arr.push(fn(this[i]));
+
+    return arr;
+};
+let arr = [1, 2, 3, 4, 5];
+let mapArr = arr.myMap((el) => el + 10);
+console.log(arr + ' map Number: ' + mapArr);
+
 
 //console.log(hoist); // Output: ReferenceError: hoist is not defined …
 //let hoist = 'The variable has been hoisted.';
